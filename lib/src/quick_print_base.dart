@@ -23,15 +23,5 @@ class QuickPrint {
   final IPrinter instance;
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is QuickPrint &&
-          runtimeType == other.runtimeType &&
-          type == other.type;
-
-  @override
-  int get hashCode => type.hashCode;
-
-  @override
   String toString() => 'Printer(type: $type)';
 }

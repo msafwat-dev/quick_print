@@ -13,7 +13,7 @@ and the Flutter guide for
 
 # Quick Print
 
-A comprehensive Flutter package for handling PDF printing across different platforms and devices. This package provides a unified interface for printing PDFs using various printer types including ESC/POS, Sunmi, Bluetooth, USB, and system printers.
+A comprehensive Flutter package for handling PDF printing across different platforms and devices. This package provides a unified interface for printing PDFs using various printer types, including ESC/POS, Sunmi, Bluetooth, USB, and system printers.
 
 [![pub package](https://img.shields.io/pub/v/quick_print.svg)](https://pub.dev/packages/quick_print)
 [![likes](https://img.shields.io/pub/likes/quick_print)](https://pub.dev/packages/quick_print/score)
@@ -39,6 +39,11 @@ A comprehensive Flutter package for handling PDF printing across different platf
   - Windows
   - Linux
   - macOS
+- 🔍 **Printer Discovery**
+  - Discover Bluetooth, BLE, USB, and desktop printers
+  - Unified API for managing discovered printers
+- 🛠️ **Error Handling**
+  - Custom exceptions for invalid files, unconnected devices, and unsupported operations
 
 ## Getting Started
 
@@ -62,13 +67,38 @@ flutter pub get
 import 'package:quick_print/quick_print.dart';
 
 // Create a printer instance
-final printer = Printer(PrinterDeviceType.mobile);
+final printer = QuickPrint(PrinterDeviceType.mobile);
 
 // Print a PDF file
 await printer.instance.print(
   path: 'assets/document.pdf',
   paperSize: PaperSize.a4,
 );
+```
+
+### Printer Discovery
+
+The `PrinterDiscoveryService` class allows you to discover printers on various platforms.
+
+```dart
+import 'package:quick_print/quick_print.dart';
+
+final discoveryService = PrinterDiscoveryService();
+
+// Initialize the service (required for BLE on Windows)
+await discoveryService.initialize();
+
+// Discover printers
+await discoveryService.discoverDevices();
+
+// List discovered printers
+final printers = discoveryService.printerDevicesList;
+printers.forEach((printer) {
+  print('Discovered printer: ${printer.name}');
+});
+
+// Dispose of the service when done
+discoveryService.dispose();
 ```
 
 ### Bluetooth Printer
@@ -84,7 +114,7 @@ final bluetoothModel = BluetoothPrinterModel(
 );
 
 // Create a printer instance
-final printer = Printer(PrinterDeviceType.bluetooth);
+final printer = QuickPrint(PrinterDeviceType.bluetooth);
 
 // Print with the Bluetooth printer
 await printer.instance.print(
@@ -107,7 +137,7 @@ final usbModel = UsbPrinterModel(
 );
 
 // Create a printer instance
-final printer = Printer(PrinterDeviceType.usb);
+final printer = QuickPrint(PrinterDeviceType.usb);
 
 // Print with the USB printer
 await printer.instance.print(
@@ -163,7 +193,14 @@ com.apple.security.device.bluetooth
 
 ## Error Handling
 
-The package uses the `PrinterException` class for error handling:
+The package uses custom exceptions for error handling:
+
+- `PrinterException`: General printer errors
+- `InvalidFileException`: Errors related to invalid files
+- `InvalidTypeException`: Errors for invalid printer models
+- `UnConnectedDeviceException`: Errors for unconnected devices
+
+Example:
 
 ```dart
 try {
