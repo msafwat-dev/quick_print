@@ -4,7 +4,7 @@ import 'package:quick_print/src/models/printer_model/i_printer_model.dart';
 /// Abstract class representing a printer interface.
 ///
 /// This class defines a contract for printer implementations to follow.
-abstract class IPrinter {
+abstract interface class IPrinter {
   /// Prints a document to the printer.
   ///
   /// [path] is the file path of the document to print.
