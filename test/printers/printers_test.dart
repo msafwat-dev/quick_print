@@ -30,7 +30,7 @@ void main() {
       );
 
       expect(
-        () => printer.print(path: testPdfPath, model: wrongModel),
+        () => printer.printPdf(path: testPdfPath, model: wrongModel),
         throwsA(isA<InvalidTypeException>()),
       );
     });
@@ -50,7 +50,7 @@ void main() {
       );
 
       expect(
-        () => printer.print(path: testPdfPath, model: wrongModel),
+        () => printer.printPdf(path: testPdfPath, model: wrongModel),
         throwsA(isA<InvalidTypeException>()),
       );
     });
@@ -66,7 +66,7 @@ void main() {
     test('print() throws PrinterException on unsupported platforms', () {
       if (Platform.isAndroid || Platform.isIOS) {
         expect(
-          () => printer.print(path: testPdfPath),
+          () => printer.printPdf(path: testPdfPath),
           throwsA(isA<PrinterException>()),
         );
       }
@@ -74,15 +74,15 @@ void main() {
 
     test('_getPageFormat() returns correct format for each paper size', () {
       expect(
-        printer.print(path: testPdfPath, paperSize: PaperSize.mm58),
+        printer.printPdf(path: testPdfPath, paperSize: PaperSize.mm58),
         throwsA(isA<PrinterException>()),
       );
       expect(
-        printer.print(path: testPdfPath),
+        printer.printPdf(path: testPdfPath),
         throwsA(isA<PrinterException>()),
       );
       expect(
-        printer.print(path: testPdfPath, paperSize: PaperSize.a4),
+        printer.printPdf(path: testPdfPath, paperSize: PaperSize.a4),
         throwsA(isA<PrinterException>()),
       );
     });
@@ -98,7 +98,7 @@ void main() {
     test('print() throws PrinterException on unsupported platforms', () {
       if (!Platform.isAndroid && !Platform.isIOS) {
         expect(
-          () => printer.print(path: testPdfPath),
+          () => printer.printPdf(path: testPdfPath),
           throwsA(isA<PrinterException>()),
         );
       }
@@ -115,7 +115,7 @@ void main() {
     test('print() throws PrinterException on non-Android platforms', () {
       if (!Platform.isAndroid) {
         expect(
-          () => printer.print(path: testPdfPath),
+          () => printer.printPdf(path: testPdfPath),
           throwsA(isA<PrinterException>()),
         );
       }
