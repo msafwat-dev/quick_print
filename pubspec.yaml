@@ -42,17 +42,9 @@ platforms:
 
 # Additional package metadata
 topics:
-  - pdf
-  - image
-  - printer
-  - pos
   - thermal-printer
   - bluetooth-printer
   - usb-printer
   - sunmi-printer
-  - desktop-printer
   - system-printer
-  - bluetooth-printer
-  - usb-printer
-  - sunmi-printer
-  - desktop-printer
+  
