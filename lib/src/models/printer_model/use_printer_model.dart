@@ -1,7 +1,11 @@
 import 'package:quick_print/src/enums/printer_device_type.dart';
 import 'package:quick_print/src/models/printer_model/i_printer_model.dart';
 
-/// Model representing a USB printer device
+/// Model representing a USB printer device.
+///
+/// This class implements the [IPrinterModel] interface for USB printers, providing
+/// properties for the printer's name, product ID, and vendor ID. It is used to identify
+/// and manage USB printers within the application.
 class UsbPrinterModel extends IPrinterModel {
   /// Creates a new USB printer model
   ///
@@ -22,23 +26,14 @@ class UsbPrinterModel extends IPrinterModel {
   /// The vendor ID of the USB device
   final String vendorId;
 
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is UsbPrinterModel &&
-          runtimeType == other.runtimeType &&
-          name == other.name &&
-          productId == other.productId &&
-          vendorId == other.vendorId;
-
-  @override
-  int get hashCode => name.hashCode ^ productId.hashCode ^ vendorId.hashCode;
 
   @override
   String toString() =>
       'UsbPrinterModel(name: $name, productId: $productId, vendorId: $vendorId)';
 
+  /// Gets the type of printer device.
+  ///
+  /// Returns [PrinterDeviceType.usb] for this class.
   @override
-  // TODO: implement type
   PrinterDeviceType get type => PrinterDeviceType.usb;
 }

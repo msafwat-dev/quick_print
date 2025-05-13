@@ -25,7 +25,7 @@ class PrinterDiscoveryService {
   /// Whether the service has been initialized.
   bool _isInitialized = false;
 
-  // Returns an unmodifiable list of discovered printer devices
+  /// Returns an unmodifiable list of discovered printer devices.
   List<IPrinterModel> get printerDevicesList =>
       List.unmodifiable(_printerDevicesList);
 
@@ -139,7 +139,9 @@ class PrinterDiscoveryService {
     final allprinters = <DesktopPrinterModel>[];
     if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
       final printers = await Printing.listPrinters();
-      if (printers.isEmpty) return [];
+      if (printers.isEmpty) {
+        return [];
+      }
       for (final printer in printers) {
         final model = DesktopPrinterModel(
           name: printer.name,

@@ -9,6 +9,7 @@ import 'package:quick_print/src/models/printer_model/i_printer_model.dart';
 import 'package:quick_print/src/models/printer_model/use_printer_model.dart';
 import 'package:quick_print/src/printers/interfaces/i_connection_printer.dart';
 
+/// Printer implementation for USB-connected printers.
 class UsbPrinter extends IConnectionPrinter {
   @override
   Future<void> printPdf({

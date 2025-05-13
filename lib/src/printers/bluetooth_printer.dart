@@ -43,7 +43,9 @@ class BluetoothPrinter extends IConnectionPrinter {
         isBle: model.isBle,
       ),
     );
-    if (!isConnected) throw UnConnectedDeviceException(model.name);
+    if (!isConnected) {
+      throw UnConnectedDeviceException(model.name);
+    }
     await printerManager.send(type: pos.PrinterType.bluetooth, bytes: bytes);
   }
 }

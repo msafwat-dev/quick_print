@@ -49,7 +49,9 @@ abstract class IConnectionPrinter implements IPrinter {
         width: page.width * widthScale,
         height: page.height * heightScale,
       );
-      if (image == null) throw InvalidFileException(path: path);
+      if (image == null) {
+        throw InvalidFileException(path: path);
+      }
       final profile = await pos.CapabilityProfile.load();
       final generator = pos.Generator(_getPaperSize(paperSize), profile);
       final decodedImage = img.decodeJpg(image.bytes);

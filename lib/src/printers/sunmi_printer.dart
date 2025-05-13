@@ -9,6 +9,7 @@ import 'package:quick_print/src/printers/interfaces/i_connection_printer.dart';
 import 'package:sunmi_printer_plus/core/enums/enums.dart';
 import 'package:sunmi_printer_plus/core/sunmi/sunmi_printer.dart';
 
+/// Printer implementation for Sunmi Android devices.
 class SunmiDevicePrinter extends IConnectionPrinter {
   @override
   Future<void> printPdf({

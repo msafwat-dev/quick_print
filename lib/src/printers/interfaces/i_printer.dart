@@ -19,6 +19,14 @@ abstract interface class IPrinter {
     PaperSize paperSize = PaperSize.mm80,
     IPrinterModel? model,
   });
+
+  /// Prints an image to the printer.
+  ///
+  /// [bytes] is the image data to print as a Uint8List.
+  /// [paperSize] is the size of the paper to use for printing (default is 80mm).
+  /// [model] is the printer model to use (optional).
+  ///
+  /// Returns a Future that completes when the printing is done.
   Future<void> printImage({
     required Uint8List bytes,
     PaperSize paperSize = PaperSize.mm80,

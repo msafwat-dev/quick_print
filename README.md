@@ -27,12 +27,12 @@ A comprehensive Flutter package for handling PDF printing across different platf
   - USB printer compatibility
   - Desktop system printer support
   - Mobile device printing
+- 🖼️ **Image Printing Support**
+  - Print images (Uint8List) directly to any supported printer
 - 📄 **Paper Size Options**
   - 80mm paper width (POS printers)
   - 58mm paper width (Thermal printers)
   - A4 paper size
-  - A5 paper size
-  - Letter size
 - 🎯 **Platform Support**
   - Android
   - iOS
@@ -51,7 +51,7 @@ Add this to your package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  quick_print: ^1.0.0
+  quick_print: <LASTEST_VERSION>
 ```
 
 Then run:
@@ -72,6 +72,13 @@ final printer = QuickPrint(PrinterDeviceType.mobile);
 // Print a PDF file
 await printer.instance.print(
   path: 'assets/document.pdf',
+  paperSize: PaperSize.a4,
+);
+
+// Print an image (as Uint8List)
+final imageBytes = await File('assets/image.png').readAsBytes();
+await printer.instance.printImage(
+  bytes: imageBytes,
   paperSize: PaperSize.a4,
 );
 ```
@@ -238,3 +245,7 @@ For support and questions, please:
 
 - Thanks to all contributors who have helped make this package better
 - Special thanks to the Flutter and Dart teams for their amazing work
+
+/// Printer implementation for USB-connected printers.
+class UsbPrinter extends IConnectionPrinter {
+}
