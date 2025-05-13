@@ -9,7 +9,7 @@ import 'package:quick_print/src/models/printer_model/i_printer_model.dart';
 import 'package:quick_print/src/printers/interfaces/i_printer.dart';
 
 /// Desktop printer implementation
-class DesktopPrinter implements IPrinter {
+class DesktopPrinter with IPrinterMixin implements IPrinter {
   pdf.PdfPageFormat _getPageFormat(PaperSize paperSize) {
     switch (paperSize) {
       case PaperSize.mm58:
@@ -35,23 +35,6 @@ class DesktopPrinter implements IPrinter {
   }) async {
     final file = File(path);
     final bytes = await file.readAsBytes();
-    await _print(model, paperSize, bytes);
-  }
-
-  @override
-  Future<void> printImage({
-    required Uint8List bytes,
-    PaperSize paperSize = PaperSize.mm80,
-    IPrinterModel? model,
-  }) async {
-    await _print(model, paperSize, bytes);
-  }
-
-  Future<void> _print(
-    IPrinterModel? model,
-    PaperSize paperSize,
-    Uint8List bytes,
-  ) async {
     if (!Platform.isWindows && !Platform.isLinux && !Platform.isMacOS) {
       throw throw const PrinterException(
         'Desktop is only supported on Windows, Linux and MacOS',
@@ -63,5 +46,15 @@ class DesktopPrinter implements IPrinter {
       format: _getPageFormat(paperSize),
       onLayout: (format) async => bytes,
     );
+  }
+
+  @override
+  Future<void> printImage({
+    required Uint8List bytes,
+    PaperSize paperSize = PaperSize.mm80,
+    IPrinterModel? model,
+  }) async {
+    final path = await convertImageToPdf(bytes);
+    await printPdf(path: path, model: model, paperSize: paperSize);
   }
 }
