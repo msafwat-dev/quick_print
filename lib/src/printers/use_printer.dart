@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter_pos_printer_platform_image_3_sdt/flutter_pos_printer_platform_image_3_sdt.dart'
     as printer;
 import 'package:quick_print/src/enums/paper_size.dart';
@@ -7,13 +9,23 @@ import 'package:quick_print/src/models/printer_model/i_printer_model.dart';
 import 'package:quick_print/src/models/printer_model/use_printer_model.dart';
 import 'package:quick_print/src/printers/interfaces/i_connection_printer.dart';
 
+/// Printer implementation for USB-connected printers.
 class UsbPrinter extends IConnectionPrinter {
   @override
-  Future<void> print({
+  Future<void> printPdf({
     required String path,
     PaperSize paperSize = PaperSize.mm80,
     IPrinterModel? model,
   }) async {
+    final bytes = await convertPdfToImage(path: path, paperSize: paperSize);
+    await _print(model, bytes, paperSize);
+  }
+
+  Future<void> _print(
+    IPrinterModel? model,
+    Uint8List bytes,
+    PaperSize paperSize,
+  ) async {
     if (model is! UsbPrinterModel) {
       throw InvalidTypeException('model must be UsbPrinterModel');
     }
@@ -30,7 +42,16 @@ class UsbPrinter extends IConnectionPrinter {
     if (!isConnected) {
       throw UnConnectedDeviceException(device.name);
     }
-    final bytes = await convertPdfToImage(path: path, paperSize: paperSize);
+
     await printerManager.send(type: printer.PrinterType.usb, bytes: bytes);
+  }
+
+  @override
+  Future<void> printImage({
+    required Uint8List bytes,
+    PaperSize paperSize = PaperSize.mm80,
+    IPrinterModel? model,
+  }) async {
+    await _print(model, bytes, paperSize);
   }
 }

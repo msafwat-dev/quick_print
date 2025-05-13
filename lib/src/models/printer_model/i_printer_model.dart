@@ -1,4 +1,6 @@
 import 'package:quick_print/quick_print.dart';
+import 'package:quick_print/src/models/printer_model/bluetooth_printer_model.dart';
+import 'package:quick_print/src/models/printer_model/use_printer_model.dart';
 
 /// Base interface for all printer models.
 ///

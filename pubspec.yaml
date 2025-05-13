@@ -2,15 +2,15 @@ name: quick_print
 description: A comprehensive Flutter package for handling PDF printing across
   different platforms and devices, supporting various printer types including
   ESC/POS, Sunmi, Bluetooth, USB, and system printers.
-version: 1.0.0
+version: 1.0.1
 repository: https://github.com/YousefMohamed6/quick_print
 homepage: https://github.com/YousefMohamed6/quick_print
 documentation: https://pub.dev/documentation/quick_print/latest/
 issue_tracker: https://github.com/YousefMohamed6/quick_print/issues
 
 environment:
-  sdk: ^3.7.2
-  flutter: ">=3.0.0"
+  sdk: ">=3.4.0 <4.0.0"
+  flutter: ">=3.22.0"
 
 # Add regular dependencies here.
 dependencies:
@@ -42,7 +42,16 @@ platforms:
 # Additional package metadata
 topics:
   - pdf
+  - image
   - printer
   - pos
   - thermal-printer
   - bluetooth-printer
+  - usb-printer
+  - sunmi-printer
+  - desktop-printer
+  - system-printer
+  - bluetooth-printer
+  - usb-printer
+  - sunmi-printer
+  - desktop-printer

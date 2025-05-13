@@ -25,18 +25,6 @@ class BluetoothPrinterModel extends IPrinterModel {
   final bool isBle;
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is BluetoothPrinterModel &&
-          runtimeType == other.runtimeType &&
-          name == other.name &&
-          address == other.address &&
-          isBle == other.isBle;
-
-  @override
-  int get hashCode => name.hashCode ^ address.hashCode ^ isBle.hashCode;
-
-  @override
   String toString() =>
       'BluetoothPrinterModel(name: $name, address: $address, isBle: $isBle)';
   @override

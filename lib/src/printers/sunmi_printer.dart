@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:quick_print/src/enums/paper_size.dart';
@@ -8,13 +9,33 @@ import 'package:quick_print/src/printers/interfaces/i_connection_printer.dart';
 import 'package:sunmi_printer_plus/core/enums/enums.dart';
 import 'package:sunmi_printer_plus/core/sunmi/sunmi_printer.dart';
 
+/// Printer implementation for Sunmi Android devices.
 class SunmiDevicePrinter extends IConnectionPrinter {
   @override
-  Future<void> print({
+  Future<void> printPdf({
     required String path,
     PaperSize paperSize = PaperSize.mm80,
     IPrinterModel? model,
   }) async {
+    final bytes = await convertPdfToImage(
+      path: path,
+      paperSize: paperSize,
+      widthScale: 2.7,
+      heightScale: 1.8,
+    );
+    await _print(bytes);
+  }
+
+  @override
+  Future<void> printImage({
+    required Uint8List bytes,
+    PaperSize paperSize = PaperSize.mm80,
+    IPrinterModel? model,
+  }) async {
+    await _print(bytes);
+  }
+
+  Future<void> _print(Uint8List bytes) async {
     if (!Platform.isAndroid) {
       throw const PrinterException(
         'Sunmi printer is only supported on Android',
@@ -27,12 +48,6 @@ class SunmiDevicePrinter extends IConnectionPrinter {
         'Sunmi printer is only supported on Sunmi devices',
       );
     }
-    final bytes = await convertPdfToImage(
-      path: path,
-      paperSize: paperSize,
-      widthScale: 2.7,
-      heightScale: 1.8,
-    );
     await SunmiPrinter.printImage(bytes, align: SunmiPrintAlign.CENTER);
   }
 }

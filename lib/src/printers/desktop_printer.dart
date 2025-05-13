@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:pdf/pdf.dart' as pdf;
 import 'package:printing/printing.dart' as package;
@@ -27,19 +28,36 @@ class DesktopPrinter implements IPrinter {
   }
 
   @override
-  Future<void> print({
+  Future<void> printPdf({
     required String path,
     PaperSize paperSize = PaperSize.mm80,
     IPrinterModel? model,
   }) async {
+    final file = File(path);
+    final bytes = await file.readAsBytes();
+    await _print(model, paperSize, bytes);
+  }
+
+  @override
+  Future<void> printImage({
+    required Uint8List bytes,
+    PaperSize paperSize = PaperSize.mm80,
+    IPrinterModel? model,
+  }) async {
+    await _print(model, paperSize, bytes);
+  }
+
+  Future<void> _print(
+    IPrinterModel? model,
+    PaperSize paperSize,
+    Uint8List bytes,
+  ) async {
     if (!Platform.isWindows && !Platform.isLinux && !Platform.isMacOS) {
       throw throw const PrinterException(
         'Desktop is only supported on Windows, Linux and MacOS',
       );
     }
 
-    final file = File(path);
-    final bytes = await file.readAsBytes();
     await package.Printing.directPrintPdf(
       printer: model as package.Printer,
       format: _getPageFormat(paperSize),
