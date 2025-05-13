@@ -8,7 +8,7 @@ import 'package:quick_print/src/models/printer_model/i_printer_model.dart';
 import 'package:quick_print/src/printers/interfaces/i_printer.dart';
 
 /// Mobile printer implementation
-class MobilePrinter implements IPrinter {
+class MobilePrinter with IPrinterMixin implements IPrinter {
   @override
   Future<void> printPdf({
     required String path,
@@ -35,6 +35,7 @@ class MobilePrinter implements IPrinter {
     PaperSize paperSize = PaperSize.mm80,
     IPrinterModel? model,
   }) async {
-    await _print(bytes);
+    final path = await convertImageToPdf(bytes);
+    await printPdf(path: path, model: model, paperSize: paperSize);
   }
 }

@@ -7,10 +7,10 @@ import 'package:quick_print/src/exceptions/invalid_type_exception.dart';
 import 'package:quick_print/src/exceptions/unconnected_device_exception.dart';
 import 'package:quick_print/src/models/printer_model/i_printer_model.dart';
 import 'package:quick_print/src/models/printer_model/use_printer_model.dart';
-import 'package:quick_print/src/printers/interfaces/i_connection_printer.dart';
+import 'package:quick_print/src/printers/interfaces/i_printer.dart';
 
 /// Printer implementation for USB-connected printers.
-class UsbPrinter extends IConnectionPrinter {
+class UsbPrinter with IPrinterMixin implements IPrinter {
   @override
   Future<void> printPdf({
     required String path,

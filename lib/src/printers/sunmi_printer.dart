@@ -5,12 +5,12 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:quick_print/src/enums/paper_size.dart';
 import 'package:quick_print/src/exceptions/printer_exception.dart';
 import 'package:quick_print/src/models/printer_model/i_printer_model.dart';
-import 'package:quick_print/src/printers/interfaces/i_connection_printer.dart';
+import 'package:quick_print/src/printers/interfaces/i_printer.dart';
 import 'package:sunmi_printer_plus/core/enums/enums.dart';
 import 'package:sunmi_printer_plus/core/sunmi/sunmi_printer.dart';
 
 /// Printer implementation for Sunmi Android devices.
-class SunmiDevicePrinter extends IConnectionPrinter {
+class SunmiDevicePrinter with IPrinterMixin implements IPrinter {
   @override
   Future<void> printPdf({
     required String path,
