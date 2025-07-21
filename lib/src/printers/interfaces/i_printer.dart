@@ -66,6 +66,7 @@ mixin class IPrinterMixin {
       await file.writeAsBytes(await pdf.save());
       return file.path;
     } catch (e) {
+      print(e.toString());
       throw InvalidFileException(path: e.toString());
     }
   }
@@ -109,6 +110,7 @@ mixin class IPrinterMixin {
         height: page.height * heightScale,
       );
       if (image == null) {
+      print(image.toString());
         throw InvalidFileException(path: path);
       }
       final profile = await pos.CapabilityProfile.load();
@@ -118,7 +120,8 @@ mixin class IPrinterMixin {
         throw InvalidFileException(path: path);
       }
       return Uint8List.fromList(generator.image(decodedImage));
-    } on Exception catch (_) {
+    } on Exception catch (e) {
+      print(e.toString());
       throw InvalidFileException(path: path);
     }
   }
